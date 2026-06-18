@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mini Adventure</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+overflow:hidden;
+font-family:Arial,sans-serif;
+}
+
+#game{
+width:100vw;
+height:100vh;
+position:relative;
+background:
+linear-gradient(to bottom,#69c6ff 0%,#69c6ff 65%,#5ecb5e 65%,#3da83d 100%);
+}
+
+/* mây */
+.cloud{
+position:absolute;
+background:white;
+border-radius:50px;
+opacity:.9;
+}
+
+.cloud:before,
+.cloud:after{
+content:"";
+position:absolute;
+background:white;
+border-radius:50%;
+}
+
+.cloud1{
+width:120px;
+height:40px;
+top:80px;
+left:10%;
+animation:moveCloud 18s linear infinite;
+}
+
+.cloud1:before{
+width:50px;
+height:50px;
+left:15px;
+top:-20px;
+}
+
+.cloud1:after{
+width:60px;
+height:60px;
+left:55px;
+top:-25px;
+}
+
+.cloud2{
+width:140px;
+height:45px;
+top:180px;
+left:60%;
+animation:moveCloud 25s linear infinite;
+}
+
+.cloud2:before{
+width:60px;
+height:60px;
+left:25px;
+top:-25px;
+}
+
+.cloud2:after{
+width:70px;
+height:70px;
+left:70px;
+top:-30px;
+}
+
+@keyframes moveCloud{
+from{transform:translateX(-150px);}
+to{transform:translateX(120vw);}
+}
+
+/* nhân vật */
+#player{
+position:absolute;
+bottom:120px;
+left:40px;
+width:60px;
+height:90px;
+}
+
+.head{
+width:40px;
+height:40px;
+background:#ffd8b0;
+border-radius:50%;
+margin:auto;
+}
+
+.body{
+width:50px;
+height:50px;
+background:#1565c0;
+margin:auto;
+border-radius:8px;
+}
+
+/* đích */
+#goal{
+position:absolute;
+bottom:110px;
+right:80px;
+width:20px;
+height:100px;
+background:#6d4c41;
+}
+
+#flag{
+position:absolute;
+top:0;
+left:20px;
+width:60px;
+height:35px;
+background:red;
+}
+
+/* HUD */
+#steps{
+position:absolute;
+top:15px;
+left:15px;
+font-size:28px;
+font-weight:bold;
+color:white;
+text-shadow:2px 2px 5px black;
+}
+
+/* nút */
+.controls{
+position:absolute;
+bottom:20px;
+width:100%;
+display:flex;
+justify-content:center;
+gap:30px;
+}
+
+button{
+width:90px;
+height:90px;
+border:none;
+border-radius:50%;
+font-size:35px;
+background:white;
+box-shadow:0 5px 15px rgba(0,0,0,.3);
+}
+
+/* popup */
+#popup{
+display:none;
+position:absolute;
+inset:0;
+background:rgba(0,0,0,.75);
+justify-content:center;
+align-items:center;
+}
+
+.box{
+background:white;
+padding:30px;
+border-radius:20px;
+font-size:35px;
+text-align:center;
+max-width:300px;
+}
+</style>
+</head>
+<body>
+
+<div id="game">
+
+<div class="cloud cloud1"></div>
+<div class="cloud cloud2"></div>
+
+<div id="steps">Bước: 0 / 5</div>
+
+<div id="player">
+<div class="head"></div>
+<div class="body"></div>
+</div>
+
+<div id="goal">
+<div id="flag"></div>
+</div>
+
+<div class="controls">
+<button onclick="move(-1)">◀</button>
+<button onclick="move(1)">▶</button>
+</div>
+
+<div id="popup">
+<div class="box">
+🤡<br><br>
+Rảnh háng chơi hả?
+</div>
+</div>
+
+</div>
+
+<script>
+let steps=0;
+let pos=40;
+
+function move(dir){
+
+if(steps>=5) return;
+
+pos += dir*80;
+
+if(pos<0) pos=0;
+if(pos>window.innerWidth-100)
+pos=window.innerWidth-100;
+
+document.getElementById("player").style.left=pos+"px";
+
+steps++;
+
+document.getElementById("steps").innerText=
+"Bước: "+steps+" / 5";
+
+if(steps>=5){
+document.getElementById("popup").style.display="flex";
+}
+}
+</script>
+
+</body>
+</html>
